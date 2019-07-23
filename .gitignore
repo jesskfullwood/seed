@@ -1,7 +1,7 @@
 
 # --- Files ---
 **/*.ts
-**.wasm
+*.wasm
 **/*.rs.bk
 **/*.log
 

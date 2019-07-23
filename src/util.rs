@@ -11,7 +11,7 @@ pub type RequestAnimationFrameTime = f64;
 
 pub struct RequestAnimationFrameHandle {
     request_id: i32,
-    _closure: Closure<FnMut(RequestAnimationFrameTime)>,
+    _closure: Closure<dyn FnMut(RequestAnimationFrameTime)>,
 }
 
 impl Drop for RequestAnimationFrameHandle {
@@ -46,7 +46,7 @@ pub fn history() -> web_sys::History {
 
 /// Request the animation frame.
 pub fn request_animation_frame(
-    f: Closure<FnMut(RequestAnimationFrameTime)>,
+    f: Closure<dyn FnMut(RequestAnimationFrameTime)>,
 ) -> RequestAnimationFrameHandle {
     let request_id = window()
         .request_animation_frame(f.as_ref().unchecked_ref())
@@ -88,10 +88,10 @@ pub fn set_value(target: &web_sys::EventTarget, value: &str) {
 
 // todo: Unable to get this convenience function working
 ///// Prevent repetition when wrapping closures.
-////pub fn make_closure(inner: impl FnMut(web_sys::Event)) -> Box<FnMut(web_sys::Event) + 'static> {
+////pub fn make_closure(inner: impl FnMut(web_sys::Event)) -> Box<dyn FnMut(web_sys::Event) + 'static> {
 //pub fn make_closure<T>(inner: T) -> Closure<Box<T>>
 //    where T: WasmClosure {
-////    Closure::wrap(Box::new(inner)) as Box<FnMut(web_sys::Event) + 'static>
+////    Closure::wrap(Box::new(inner)) as Box<dyn FnMut(web_sys::Event) + 'static>
 //    Closure::wrap(Box::new(inner))
 //}
 
